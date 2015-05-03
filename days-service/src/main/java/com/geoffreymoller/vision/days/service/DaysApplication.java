@@ -27,7 +27,7 @@ public class DaysApplication extends Application<DaysConfiguration> {
         final DBIFactory factory = new DBIFactory();
         final DBI jdbi = factory.build(environment, daysConfiguration.getDataSourceFactory(), "mysql");
 
-        environment.jersey().register(new DaysResource(daysConfiguration, metricRegistry));
+        environment.jersey().register(new DaysResource(jdbi, daysConfiguration, metricRegistry));
     }
 
 }
