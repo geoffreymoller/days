@@ -19,7 +19,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Date;
 
-@Path("/day/{user_id}/{date}")
+@Path("/api/v1/day/{user_id}/{date}")
 @Produces(MediaType.APPLICATION_JSON)
 public class DaysResource {
 
