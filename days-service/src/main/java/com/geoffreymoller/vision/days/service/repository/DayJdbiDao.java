@@ -56,8 +56,8 @@ public class DayJdbiDao implements DayDao {
         activityDao.insertMultiple(ids, userIds, dayIds, dates, names, tags, durations, durationMs, counts, notes);
     }
 
-    public Day get(Long userId, Long date) {
-        return getDayWithActivities(dayDao.get(userId, date));
+    public Day get(Long userId, DateTime date) {
+        return getDayWithActivities(dayDao.get(userId, date.toDate().getTime()));
     }
 
     @Override

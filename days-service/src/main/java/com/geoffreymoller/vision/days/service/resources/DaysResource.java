@@ -9,6 +9,7 @@ import com.geoffreymoller.vision.days.service.configuration.DaysConfiguration;
 import com.geoffreymoller.vision.days.service.domain.Day;
 import com.geoffreymoller.vision.days.service.repository.DayJdbiDao;
 import com.google.common.base.Optional;
+import io.dropwizard.jersey.params.DateTimeParam;
 import org.skife.jdbi.v2.DBI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Date;
 
-@Path("/api/v1/day/{user_id}/{date}")
+@Path("/api/v1/day")
 @Produces(MediaType.APPLICATION_JSON)
 public class DaysResource {
 
@@ -38,10 +39,11 @@ public class DaysResource {
 
     @Timed
     @GET
+    @Path("/{user_id}/{date}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDay(@PathParam("user_id") long userId,
-                           @PathParam("date") long date)  {
-        Optional<Day> dayOptional = new GetDayCommand(metricsRegistry, dao, userId, new Date(date)).execute();
+                           @PathParam("date") DateTimeParam date)  {
+        Optional<Day> dayOptional = new GetDayCommand(metricsRegistry, dao, userId, date.get()).execute();
         return doResponse(dayOptional);
     }
 
@@ -49,9 +51,7 @@ public class DaysResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response postDay(@PathParam("user_id") long userId,
-                           @PathParam("date") long date,
-                           @Valid Day day)  {
+    public Response postDay(@Valid Day day)  {
         Optional<Day> dayOptional = new PostDayCommand(metricsRegistry, dao, day).execute();
         return doResponse(dayOptional);
     }
@@ -60,9 +60,7 @@ public class DaysResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateDay(@PathParam("user_id") long userId,
-                            @PathParam("date") long date,
-                            @Valid Day day)  {
+    public Response updateDay(@Valid Day day)  {
         Optional<Day> dayOptional = new UpdateDayCommand(metricsRegistry, dao, day).execute();
         return doResponse(dayOptional);
     }

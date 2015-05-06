@@ -1,6 +1,7 @@
 package com.geoffreymoller.vision.days.service.repository.mapper;
 
 import com.geoffreymoller.vision.days.service.domain.Day;
+import org.joda.time.DateTime;
 import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 
@@ -14,7 +15,7 @@ public class DayMapper implements ResultSetMapper<Day> {
         return new Day(
                 rs.getLong("id"),
                 rs.getLong("user_id"),
-                rs.getDate("date"),
+                new DateTime(rs.getDate("date")),
                 rs.getString("journal"));
     }
 }

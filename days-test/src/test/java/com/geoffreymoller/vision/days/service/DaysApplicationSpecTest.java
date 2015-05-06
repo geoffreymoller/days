@@ -19,15 +19,12 @@ public class DaysApplicationSpecTest {
                     DaysApplicationSpecTest.class.getResource("days.test.yml").getPath());
 
     @Test
-    public void loginHandlerRedirectsAfterPost() {
-
+    public void when_a_non_existent_day_is_requested_return_500() {
         Client client = new JerseyClientBuilder(RULE.getEnvironment()).build("test client");
-
         Response response = client.target(
-                String.format("http://localhost:%d/api/v1/day/1/1430781196522", RULE.getLocalPort()))
+                String.format("http://localhost:%d/api/v1/day/1/2099-10-10", RULE.getLocalPort()))
                 .request()
                 .get();
-
-        assertThat(response.getStatus()).isEqualTo(200);
+        assertThat(response.getStatus()).isEqualTo(500);
     }
 }

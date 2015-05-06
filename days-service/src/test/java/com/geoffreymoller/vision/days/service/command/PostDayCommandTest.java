@@ -4,6 +4,7 @@ import com.codahale.metrics.MetricRegistry;
 import com.geoffreymoller.vision.days.service.domain.Day;
 import com.geoffreymoller.vision.days.service.repository.DayJdbiDao;
 import com.google.common.base.Optional;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.skife.jdbi.v2.DBI;
@@ -21,7 +22,7 @@ public class PostDayCommandTest {
     private long ID = 1L;
     private long USER_ID = 1L;
     private String JOURNAL = "journal content";
-    private Date DATE = new Date(1430600085578L);
+    private DateTime DATE = new DateTime(1430600085578L);
     private MetricRegistry registry;
 
     DBI dbiMock;

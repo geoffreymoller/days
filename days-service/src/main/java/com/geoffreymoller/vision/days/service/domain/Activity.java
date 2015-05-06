@@ -12,19 +12,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Activity {
 
-    @NotNull
     @JsonProperty("id")
     private long id;
 
-    @NotNull
     @JsonProperty("user_id")
     private long userId;
 
-    @NotNull
     @JsonProperty("day_id")
     private long dayId;
 
-    @NotNull
     @JsonProperty("date")
     private DateTime date;
 
@@ -98,10 +94,6 @@ public class Activity {
             @JsonProperty("durationMs") long durationMs,
             @JsonProperty("count") long count,
             @JsonProperty("notes") String notes) {
-        checkNotNull(id, "id can't be null");
-        checkNotNull(userId, "userId can't be null");
-        checkNotNull(dayId, "dayId can't be null");
-        checkNotNull(date, "date can't be null");
         checkNotNull(name, "name can't be null");
         this.id = id;
         this.userId = userId;

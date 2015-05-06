@@ -5,6 +5,8 @@ import com.geoffreymoller.vision.days.service.domain.Day;
 import com.geoffreymoller.vision.days.service.repository.DayJdbiDao;
 import com.google.common.base.Optional;
 import com.netflix.hystrix.HystrixCommand;
+import io.dropwizard.jersey.params.DateTimeParam;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,10 +17,10 @@ public class GetDayCommand extends HystrixCommand<Optional<Day>> {
     private static final Logger LOG = LoggerFactory.getLogger(GetDayCommand.class);
 
     private final long userId;
-    private final Date date;
+    private final DateTime date;
     private final DayJdbiDao dao;
 
-    public GetDayCommand(MetricRegistry metricsRegistry, DayJdbiDao dao, long userId, Date date) {
+    public GetDayCommand(MetricRegistry metricsRegistry, DayJdbiDao dao, long userId, DateTime date) {
         super(VisionDependencyKey.GET_DAY);
         this.dao = dao;
         this.userId = userId;
@@ -28,7 +30,7 @@ public class GetDayCommand extends HystrixCommand<Optional<Day>> {
     @Override
     protected Optional<Day> run() throws Exception {
         LOG.info("Retrieving day for user: " + userId);
-        return Optional.of(dao.get(userId, date.getTime()));
+        return Optional.of(dao.get(userId, date));
     }
 
     @Override
